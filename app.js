@@ -14,7 +14,7 @@ inputEl.addEventListener("keyup", function() {
         if(inputEl.value === words[i]){
             words.splice(i, 1)
             render()
-            inputEl.value = "";
+            inputEl.value = ""
         }
     }
 })
@@ -30,3 +30,27 @@ function render(){
 }
 
 render()
+
+function arrayStringMax(arr){ // Array highest characters
+    let max = 0;
+    for(i = 0; i < arr.length; i++){
+        if(arr[i].length > max){
+        max = arr[i].length;
+        }
+    }
+    return max
+}
+
+function arrayStringMin(arr){ // Array lowest characters
+    let min = Infinity;
+    for(i = 0; i < arr.length; i++){
+        if(arr[i].length < min){
+            min = arr[i].length
+        }
+    }
+    return min
+}
+
+
+
+
