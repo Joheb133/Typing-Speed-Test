@@ -9,6 +9,3 @@ body{
     padding: 8px;
     box-sizing: border-box;
 }
-input::after{
-    background:red;
-}
