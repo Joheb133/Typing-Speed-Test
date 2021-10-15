@@ -5,14 +5,25 @@
 let words = [
     "hello", "world", "think", "iron",
     "love", "music", "genius", "prevent",
+    "hello", "world", "think", "iron",
+    "love", "music", "genius", "prevent",
+    "hello", "world", "think", "iron",
+    "love", "music", "genius", "prevent",
+    "hello", "world", "think", "iron",
+    "love", "music", "genius", "prevent",
+    "hello", "world", "think", "iron",
+    "love", "music", "genius", "prevent",
+    "hello", "world", "think", "iron",
+    "love", "music", "genius", "prevent",
 ]
 const inputEl = document.getElementById("input-el")
 const ulEl = document.getElementById("ul-el")
 
-const wordsMax = arrayStringMax(words)
-const wordsMin = arrayStringMin(words)
+const charMax = arrayStringMax(words)
+const charMin = arrayStringMin(words)
 
-function arrayStringMax(arr) { // Array highest characters
+// Array character max
+function arrayStringMax(arr) { 
     let max = 0;
     for (i = 0; i < arr.length; i++) {
         if (arr[i].length > max) {
@@ -22,7 +33,8 @@ function arrayStringMax(arr) { // Array highest characters
     return max
 }
 
-function arrayStringMin(arr) { // Array lowest characters
+// Array character min
+function arrayStringMin(arr) { 
     let min = Infinity;
     for (i = 0; i < arr.length; i++) {
         if (arr[i].length < min) {
@@ -32,8 +44,8 @@ function arrayStringMin(arr) { // Array lowest characters
     return min
 }
 
+// If key pressed run through loop
 inputEl.addEventListener("keyup", function () {
-    if (inputEl.value.length >= wordsMin && inputEl.value.length <= wordsMax) {
         for (i = 0; i < words.length; i++) {
             if (inputEl.value === words[i]) {
                 words.splice(i, 1)
@@ -41,7 +53,6 @@ inputEl.addEventListener("keyup", function () {
                 inputEl.value = ""
             }
         }
-    }
 })
 
 function render() {
