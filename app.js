@@ -9,19 +9,44 @@ let words = [
 const inputEl = document.getElementById("input-el")
 const ulEl = document.getElementById("ul-el")
 
-inputEl.addEventListener("keyup", function() {
-    for(i = 0; i < words.length; i++){
-        if(inputEl.value === words[i]){
-            words.splice(i, 1)
-            render()
-            inputEl.value = ""
+const wordsMax = arrayStringMax(words)
+const wordsMin = arrayStringMin(words)
+
+function arrayStringMax(arr) { // Array highest characters
+    let max = 0;
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i].length > max) {
+            max = arr[i].length;
+        }
+    }
+    return max
+}
+
+function arrayStringMin(arr) { // Array lowest characters
+    let min = Infinity;
+    for (i = 0; i < arr.length; i++) {
+        if (arr[i].length < min) {
+            min = arr[i].length
+        }
+    }
+    return min
+}
+
+inputEl.addEventListener("keyup", function () {
+    if (inputEl.value.length >= wordsMin && inputEl.value.length <= wordsMax) {
+        for (i = 0; i < words.length; i++) {
+            if (inputEl.value === words[i]) {
+                words.splice(i, 1)
+                render()
+                inputEl.value = ""
+            }
         }
     }
 })
 
-function render(){
+function render() {
     let listItems = "";
-    for(i = 0; i < words.length; i++){
+    for (i = 0; i < words.length; i++) {
         listItems += `
         <li> ${words[i]} </li>
         `
@@ -30,27 +55,4 @@ function render(){
 }
 
 render()
-
-function arrayStringMax(arr){ // Array highest characters
-    let max = 0;
-    for(i = 0; i < arr.length; i++){
-        if(arr[i].length > max){
-        max = arr[i].length;
-        }
-    }
-    return max
-}
-
-function arrayStringMin(arr){ // Array lowest characters
-    let min = Infinity;
-    for(i = 0; i < arr.length; i++){
-        if(arr[i].length < min){
-            min = arr[i].length
-        }
-    }
-    return min
-}
-
-
-
 
