@@ -9,29 +9,13 @@ body{
     padding: 8px;
     box-sizing: border-box;
 }
-.ul-wrap{
-    position: absolute;
-}
-#ul-el{
-    position: relative;
-    list-style: none;
+#words-el{
+    font-size: 28px;
     opacity: 0.6;
-    z-index: 0;
 }
-#ul-el li{
-    font-size: 48px;
-    float: left;
-    margin: 8px;
-    
+#right-span{
+    color: green;
 }
-#ul-overlay-el{
-    position: absolute;
-    list-style: none;
-    opacity: 1;
-    z-index: 1;
-}
-#ul-overlay-el li{
-    font-size: 48px;
-    float: left;
-    margin: 8px;
+#wrong-span{
+    color: red;
 }

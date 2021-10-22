@@ -56,15 +56,16 @@ inputEl.addEventListener("keyup", function () {
 function progressionRender(){
     let inputPosition = (inputEl.value.length) - 1; // this gives current input position
     let inputCurrentValue = inputEl.value.charAt(inputPosition); // character at current input position
-    let wordsCurrentValue = wordsEl.children[inputPosition].textContent; // span textContent at input position
+    let wordsCurrentValue = wordsEl.children[inputPosition]; // span at input position
     
     // If the letter at inputs position is at is equal to the span at the same position as input position then execute code 
-    if(inputCurrentValue === wordsCurrentValue){
-        console.log(true)
+    if(inputCurrentValue === wordsCurrentValue.textContent){
+        wordsCurrentValue.id = "right-span";
     } else{
-        console.log(false)
+        wordsCurrentValue.id = "wrong-span"
     }
-}
+};
+
 
 
 
