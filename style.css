@@ -20,7 +20,9 @@ body{
 }
 #right-span{
     color: green;
+    background-color: rgb(19, 185, 19);
 }
 #wrong-span{
     color: red;
+    background-color: rgb(151, 9, 9);
 }
