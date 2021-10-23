@@ -31,7 +31,9 @@ let wordsBuffer = [
 let words = [
     "hello", "world", "think", "iron",
 ];
+let keyPosition = 0;
 const inputEl = document.getElementById("input-el");
+//const typeWrapEl = document.getElementById("type-wrap")
 const wordsEl = document.getElementById("words-el")
 
 //words = wordsBuffer;
@@ -48,25 +50,20 @@ function documentLetters(item){
 words.forEach(documentLetters);
 
 // key is pressed in input
-inputEl.addEventListener("keyup", function () {
+inputEl.addEventListener("keyup", function (event) {
+    keyValue = event.key
     progressionRender();
 });
 
 // Render to show user progression. Probably going to change each active spans opacity
 function progressionRender(){
-    let inputPosition = (inputEl.value.length) - 1; // this gives current input position
-    let inputCurrentValue = inputEl.value.charAt(inputPosition); // character at current input position
-    let wordsCurrentValue = wordsEl.children[inputPosition]; // span at input position
+    keyPosition++;
+    let wordsCurrentValue = wordsEl.children[keyPosition-1];
     
     // If the letter at inputs position is at is equal to the span at the same position as input position then execute code 
-    if(inputCurrentValue === wordsCurrentValue.textContent){
+    if( keyValue === wordsCurrentValue.textContent){
         wordsCurrentValue.id = "right-span";
     } else{
         wordsCurrentValue.id = "wrong-span"
     }
 };
-
-
-
-
-

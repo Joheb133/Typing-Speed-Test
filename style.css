@@ -3,7 +3,12 @@ body{
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+/* #type-wrap{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 255, 0.158);
+} */
 #input-el{
     width: 100%;
     padding: 8px;
