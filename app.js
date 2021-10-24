@@ -1,33 +1,10 @@
 
 let wordsBuffer = [
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-    "hello", "world", "think", "iron",
-];
+    'Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science', 
+    'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 'somehow', 'replicates', 
+    'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has', 
+    'been', 'around', 'so', 'long', 'it', 'feels', 'familiar.']
+;
 let words = [
     "hello", "world", "think", "iron",
 ];
@@ -35,7 +12,7 @@ let keyPosition = 0;
 const wordsEl = document.getElementById("words-el");
 let wordsCurrentValue = wordsEl.children[keyPosition];
 
-//words = wordsBuffer;
+words = wordsBuffer;
 
 //function adds letters from words array to document
 function documentLetters(item) {
@@ -48,7 +25,7 @@ function documentLetters(item) {
 };
 words.forEach(documentLetters);
 
-// key is pressed in input
+// keypress doesnt register keys like backspace and arrows
 document.addEventListener("keypress", function (event) {
     keyPressValue = event.key
     progressionRender();
