@@ -1,28 +1,23 @@
 body{
     padding: 8px;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-/* #type-wrap{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 255, 0.158);
-} */
-#input-el{
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    font-family: monospace;
 }
 #words-el{
     font-size: 28px;
     opacity: 0.6;
 }
 #right-span{
+    /* display: inline-block; */
+    width: 16px;
     color: green;
-    background-color: rgb(19, 185, 19);
+    background-color: rgba(91, 235, 91, 0.5);
+    border-radius: 8px;
 }
 #wrong-span{
-    color: red;
-    background-color: rgb(151, 9, 9);
+    /* display: inline-block; */
+    width: 16px;
+    color: rgb(167, 0, 0);
+    background-color: rgba(255, 93, 93, 0.5);
+    border-radius: 8px;
 }
