@@ -1,18 +1,17 @@
-
-let wordsBuffer = [
+let words1 = [
     'Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science', 
     'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 'somehow', 'replicates', 
     'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has', 
     'been', 'around', 'so', 'long', 'it', 'feels', 'familiar.']
 ;
-let words = [
+let words2 = [
     "hello", "world", "think", "iron",
 ];
 let keyPosition = 0;
 const wordsEl = document.getElementById("words-el");
 let wordsCurrentValue = wordsEl.children[keyPosition];
 
-words = wordsBuffer;
+let words = words1;
 
 //function adds letters from words array to document
 function documentLetters(item) {
@@ -37,6 +36,9 @@ document.addEventListener("keyup", function (event) {
         keyPosition--;
         wordsCurrentValue = wordsEl.children[keyPosition];
         wordsCurrentValue.id = "";
+        // indicate current user placement
+        wordsCurrentValue.style.borderBottom = "solid blue";
+        wordsEl.children[keyPosition+1].style.borderBottom = "none";
     }
 });
 
@@ -49,6 +51,9 @@ function progressionRender() {
     } else {
         wordsCurrentValue.id = "wrong-span";
     }
+    // indicate current user placement
+    wordsEl.children[keyPosition + 1].style.borderBottom = "solid blue";
+    wordsCurrentValue.style.borderBottom = "none";
+    
     keyPosition++;
-
 };
