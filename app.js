@@ -24,36 +24,47 @@ function documentLetters(item) {
 };
 words.forEach(documentLetters);
 
-// keypress doesnt register keys like backspace and arrows
+
+// Two event listeners attached to document because: Keypress only listens for letters, numbers and punctuations. This stops the need to check for specific keys.
+// I still need the backspace and that's what the second event listener is for.
+
 document.addEventListener("keypress", function (event) {
     keyPressValue = event.key
-    progressionRender();
+    progressionForward();
 });
-// keypressed for backspace
-document.addEventListener("keyup", function (event) {
+
+document.addEventListener("keydown", function (event) {
     keyUpValue = event.key
     if (keyUpValue === "Backspace" && keyPosition > 0) {
-        keyPosition--;
-        wordsCurrentValue = wordsEl.children[keyPosition];
-        wordsCurrentValue.id = "";
-        // indicate current user placement
-        wordsCurrentValue.style.borderBottom = "solid blue";
-        wordsEl.children[keyPosition+1].style.borderBottom = "none";
+        progressionBackward();
     }
 });
 
-// Render to show user progression. Probably going to change each active spans opacity
-function progressionRender() {
-    wordsCurrentValue = wordsEl.children[keyPosition];
-    // If the letter at inputs position is at is equal to the span at the same position as input position then execute code
+// Code for when the user presses a key
+function progressionForward() {
+    wordsCurrentValue = wordsEl.children[keyPosition]; // update var since key position changes
+    keyPosition++; // increase keyPosition since a key was pressed
+    
+    // code below is less for function but more about giving the user feedback
+    // indicate current user placement
+    wordsEl.children[keyPosition].style.borderBottom = "solid blue";
+    wordsCurrentValue.style.borderBottom = "none";
+
+    // conditional statements check if user input is right/wrong
     if (keyPressValue === wordsCurrentValue.textContent) {
         wordsCurrentValue.id = "right-span";
     } else {
         wordsCurrentValue.id = "wrong-span";
     }
+};
+
+// Code for when the user presses backspace
+function progressionBackward(){
+    keyPosition--;
+    wordsCurrentValue = wordsEl.children[keyPosition]; //update var
     // indicate current user placement
-    wordsEl.children[keyPosition + 1].style.borderBottom = "solid blue";
-    wordsCurrentValue.style.borderBottom = "none";
-    
-    keyPosition++;
+    wordsCurrentValue.style.borderBottom = "solid blue";
+    wordsEl.children[keyPosition+1].style.borderBottom = "none";
+
+    wordsCurrentValue.id = ""; // remove right/wrong styling
 };
