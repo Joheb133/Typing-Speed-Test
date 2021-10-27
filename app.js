@@ -1,17 +1,13 @@
-let words1 = [
+const words = [
     'Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science', 
     'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 'somehow', 'replicates', 
     'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has', 
     'been', 'around', 'so', 'long', 'it', 'feels', 'familiar.']
 ;
-let words2 = [
-    "hello", "world", "think", "iron",
-];
-let keyPosition = 0;
 const wordsEl = document.getElementById("words-el");
+const paragraphLength = wordsEl.childElementCount;
+let keyPosition = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
-
-let words = words1;
 
 //function adds letters from words array to document
 function documentLetters(item) {
@@ -27,10 +23,11 @@ words.forEach(documentLetters);
 
 // Two event listeners attached to document because: Keypress only listens for letters, numbers and punctuations. This stops the need to check for specific keys.
 // I still need the backspace and that's what the second event listener is for.
-
 document.addEventListener("keypress", function (event) {
-    keyPressValue = event.key
-    progressionForward();
+    if(keyPosition < paragraphLength-1){ // makes sure not to run function when there's no more letters
+        keyPressValue = event.key
+        progressionForward();
+    };
 });
 
 document.addEventListener("keydown", function (event) {
