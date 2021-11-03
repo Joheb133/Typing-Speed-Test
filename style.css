@@ -3,6 +3,10 @@ body{
     margin: 0;
     font-family: monospace;
 }
+#timer-el{
+    font-size: 32px;
+    color: rgb(77, 77, 231);
+}
 #words-el{
     font-size: 28px;
     opacity: 0.6;
