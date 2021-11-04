@@ -1,13 +1,21 @@
-const words = [
-    'Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science',
-    'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 'somehow', 'replicates',
-    'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has',
-    'been', 'around', 'so', 'long', 'it', 'feels', 'familiar.'
-];
+const words = ['Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science', 'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 
+'somehow', 'replicates', 'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has', 'been', 'around', 'so', 'long', 'it', 
+'feels', 'familiar.', 'Margolis', 'wrote', 'the', 'paper', 'with', 'senior', 'author', 'Pulkit', 'Agrawal,', 'who', 'heads', 'the', 
+'Improbable', 'AI', 'lab', 'at', 'MIT', 'and', 'is', 'the', 'Steven', 'G.', 'and', 'Renee', 'Finn', 'Career', 'Development', 'Assistant', 
+'Professor', 'in', 'the', 'Department', 'of', 'Electrical', 'Engineering', 'and', 'Computer', 'Science;', 'Professor', 'Sangbae', 
+'Kim', 'in', 'the', 'Department', 'of', 'Mechanical', 'Engineering', 'at', 'MIT;', 'and', 'fellow', 'graduate', 'students', 'Tao', 
+'Chen', 'and', 'Xiang', 'Fu', 'at', 'MIT.', 'Other', 'co-authors', 'include', 'Kartik', 'Paigwar,', 'a', 'graduate', 'student', 'at', 
+'Arizona', 'State', 'University.'];
 const wordsEl = document.getElementById("words-el");
-
+const timerEl = document.getElementById("timer-el");
+const wpmEl = document.getElementById("wpm-el");
 let keyPosition = 0;
+let countdown = 60;
+let timeElapsed = 1;
+let uncorrectedErrors = 0;
+let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
+
 
 //function adds letters from words array to document
 function documentLetters(item) {
@@ -20,19 +28,20 @@ function documentLetters(item) {
 };
 words.forEach(documentLetters);
 const paragraphLength = wordsEl.childElementCount;
+timerEl.textContent = countdown;
 
 // Two event listeners attached to document because: Keypress only listens for letters, numbers and punctuations. This stops the need to check for specific keys.
 // I still need the backspace and that's what the second event listener is for.
 document.addEventListener("keypress", userKeyPress);
+document.addEventListener("keydown", userKeyDown);
 
 function userKeyPress(e) {
     if (keyPosition < paragraphLength - 1) { // makes sure not to run function when there's no more letters
         keyPressValue = e.key;
         progressionForward();
+        wpm();
     };
 };
-
-document.addEventListener("keydown", userKeyDown);
 
 function userKeyDown(e) {
     keyUpValue = e.key
@@ -56,7 +65,8 @@ function progressionForward() {
         wordsCurrentValue.id = "right-span";
     } else {
         wordsCurrentValue.id = "wrong-span";
-    }
+        uncorrectedErrors++;
+    };
 };
 
 // Code for when the user presses backspace
@@ -66,31 +76,36 @@ function progressionBackward() {
     // indicate current user placement
     wordsCurrentValue.style.borderBottom = "solid blue";
     wordsEl.children[keyPosition + 1].style.borderBottom = "none";
-
+    if (wordsCurrentValue.id === "wrong-span"){ // Using this condition so user isn't punished for fixed mistakes
+        uncorrectedErrors--;
+    };
     wordsCurrentValue.id = ""; // remove right/wrong styling
 };
 
+// WPM function
+function wpm(){
+    let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60);
+    wpmEl.textContent = Math.round(grossWpm);
+};
+
 // Timer is being kept here for now since I see no reason for it to have its own file
-
-const timerEl = document.getElementById("timer-el");
-let time = 180;
-
-
-
-// Quick function that starts timer when a key is pressed then kills itself
+// Quick function that starts timer when a key is pressed then kills the event listener
 
 document.addEventListener("keydown", checkFirstInput);
 
 function checkFirstInput() {
     // countdown timer
     let timeInterval = setInterval(function () {
-        time--;
-        timerEl.textContent = time;
-        if (time <= 0) {
-            clearInterval(timeInterval);
+        timeElapsed++;
+        countdown--;
+        timerEl.textContent = countdown;
+        if (countdown <= 0) {
+            clearInterval(timeInterval);// stop timer
             // Kill event listeners to end game
             document.removeEventListener("keypress", userKeyPress);
             document.removeEventListener("keydown", userKeyDown);
+            // Notify user
+            wordsEl.textContent = "Time's Up";
         };
     }, 1000);
     document.removeEventListener("keydown", checkFirstInput);

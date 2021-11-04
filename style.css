@@ -7,6 +7,11 @@ body{
     font-size: 32px;
     color: rgb(77, 77, 231);
 }
+#wpm-el{
+    font-size: 28px;
+    font-family: sans-serif;
+    color: rgb(183, 0, 255);
+}
 #words-el{
     font-size: 28px;
     opacity: 0.6;
