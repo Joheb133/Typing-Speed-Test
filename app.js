@@ -9,10 +9,12 @@ const words = ['Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science'
 const wordsEl = document.getElementById("words-el");
 const timerEl = document.getElementById("timer-el");
 const wpmEl = document.getElementById("wpm-el");
+const wpmElTest = document.getElementById("wpm-test-el");
 let keyPosition = 0;
 let countdown = 60;
 let timeElapsed = 1;
 let uncorrectedErrors = 0;
+let errorStreak = 0;
 let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
 
@@ -36,10 +38,12 @@ document.addEventListener("keypress", userKeyPress);
 document.addEventListener("keydown", userKeyDown);
 
 function userKeyPress(e) {
-    if (keyPosition < paragraphLength - 1) { // makes sure not to run function when there's no more letters
-        keyPressValue = e.key;
+    keyPressValue = e.key;
+    if (errorStreak < 1) { // makes sure not to run function when there's no more letters
         progressionForward();
-        wpm();
+        
+    } else {
+        stopProgression();
     };
 };
 
@@ -66,6 +70,21 @@ function progressionForward() {
     } else {
         wordsCurrentValue.id = "wrong-span";
         uncorrectedErrors++;
+        errorStreak++;
+    };
+};
+
+// Code for no progression since two inputs in a row are wrong
+function stopProgression() {
+    wordsCurrentValue = wordsEl.children[keyPosition];
+    wordsEl.children[keyPosition].style.borderBottom = "solid red"; // let user know their current input was wrong and they cant move on
+    if(keyPressValue === wordsCurrentValue.textContent){
+        errorStreak = 0;
+        keyPosition++;
+        uncorrectedErrors--;
+        wordsCurrentValue.id = "right-span";
+        wordsCurrentValue.style.borderBottom = "none";
+        wordsEl.children[keyPosition].style.borderBottom = "solid blue";
     };
 };
 
@@ -78,13 +97,18 @@ function progressionBackward() {
     wordsEl.children[keyPosition + 1].style.borderBottom = "none";
     if (wordsCurrentValue.id === "wrong-span"){ // Using this condition so user isn't punished for fixed mistakes
         uncorrectedErrors--;
+        errorStreak = 0;
     };
     wordsCurrentValue.id = ""; // remove right/wrong styling
 };
 
 // WPM function
 function wpm(){
-    let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60);
+    //let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60); 
+
+    let wpm = (keyPosition/5) / (timeElapsed/60);
+    let accuracy = (((keyPosition - uncorrectedErrors)/keyPosition));
+    let grossWpm = wpm * accuracy;
     wpmEl.textContent = Math.round(grossWpm);
 };
 
@@ -94,12 +118,14 @@ function wpm(){
 document.addEventListener("keydown", checkFirstInput);
 
 function checkFirstInput() {
+    let wpmTimeInterval = setInterval(wpm, 100);
     // countdown timer
     let timeInterval = setInterval(function () {
         timeElapsed++;
         countdown--;
         timerEl.textContent = countdown;
         if (countdown <= 0) {
+            clearInterval(wpmTimeInterval);
             clearInterval(timeInterval);// stop timer
             // Kill event listeners to end game
             document.removeEventListener("keypress", userKeyPress);

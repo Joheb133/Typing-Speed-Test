@@ -2,6 +2,7 @@ body{
     padding: 8px;
     margin: 0;
     font-family: monospace;
+    font-size: 28px;
 }
 #timer-el{
     font-size: 32px;
