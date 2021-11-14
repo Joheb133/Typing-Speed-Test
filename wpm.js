@@ -19,6 +19,8 @@ let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
 
 
+
+
 //function adds letters from words array to document
 function documentLetters(item) {
     let letters = "";
