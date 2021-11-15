@@ -4,6 +4,11 @@ body{
     font-family: monospace;
     font-size: 28px;
 }
+canvas{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
 #timer-el{
     font-size: 32px;
     color: rgb(77, 77, 231);
