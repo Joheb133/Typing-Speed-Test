@@ -1,5 +1,5 @@
 
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.134.0-dfARp6tVCbGvQehLfkdx/mode=imports/optimized/three.js';
+import * as THREE from 'three';
 
 const scene = new THREE.Scene();
 
