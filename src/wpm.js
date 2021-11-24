@@ -17,6 +17,7 @@ let uncorrectedErrors = 0;
 let errorStreak = 0;
 let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
+let grossWpm = 0;
 
 
 
@@ -110,7 +111,7 @@ function wpm(){
 
     let wpm = (keyPosition/5) / (timeElapsed/60);
     let accuracy = (((keyPosition - uncorrectedErrors)/keyPosition));
-    let grossWpm = wpm * accuracy;
+    grossWpm = wpm * accuracy;
     wpmEl.textContent = Math.round(grossWpm);
 };
 
