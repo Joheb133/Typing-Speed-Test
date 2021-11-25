@@ -17,7 +17,7 @@ let uncorrectedErrors = 0;
 let errorStreak = 0;
 let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
-let grossWpm = 0;
+global.grossWpm = 0;
 
 
 
@@ -44,7 +44,6 @@ function userKeyPress(e) {
     keyPressValue = e.key;
     if (errorStreak < 1) { // makes sure not to run function when there's no more letters
         progressionForward();
-        
     } else {
         stopProgression();
     };
@@ -111,14 +110,14 @@ function wpm(){
 
     let wpm = (keyPosition/5) / (timeElapsed/60);
     let accuracy = (((keyPosition - uncorrectedErrors)/keyPosition));
-    grossWpm = wpm * accuracy;
-    wpmEl.textContent = Math.round(grossWpm);
+    grossWpm = Math.round(wpm * accuracy);
+    wpmEl.textContent = grossWpm;
 };
 
 // Timer is being kept here for now since I see no reason for it to have its own file
 // Quick function that starts timer when a key is pressed then kills the event listener
 
-document.addEventListener("keydown", checkFirstInput);
+document.addEventListener("keypress", checkFirstInput);
 
 function checkFirstInput() {
     let wpmTimeInterval = setInterval(wpm, 100);
@@ -137,5 +136,5 @@ function checkFirstInput() {
             wordsEl.textContent = "Time's Up";
         };
     }, 1000);
-    document.removeEventListener("keydown", checkFirstInput);
+    document.removeEventListener("keypress", checkFirstInput);
 };

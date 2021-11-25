@@ -68,12 +68,12 @@ light.position.setZ(10 + cube.geometry.parameters.height)
 
 
 // gui.add(cube.scale, 'x');
-let speed = 20;
+let speed = grossWpm;
 renderer.render(scene, camera);
 let cubeDirection = 1;
 function animator() {
     // Update objects
-    cube.position.x += (speed / 100) * cubeDirection;
+    cube.position.x += (grossWpm / 100) * cubeDirection;
     //camera.position.setX(cube.position.x); // follow cube
     light.position.setX(cube.position.x)
     //controls.update(); // update camera controls
@@ -94,6 +94,7 @@ setInterval(function () {
     } else if(cube.position.x < -10){
         cubeDirection = 1;
     }
-}, 1000);
+    speed = grossWpm;
+}, 100);
 
 
