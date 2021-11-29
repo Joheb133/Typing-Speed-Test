@@ -2,7 +2,7 @@ const path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: ["./src/index.js", "./src/wpm.js"],
+    entry: ["./src/wpm.js", "./src/index.js"],
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/test.html"

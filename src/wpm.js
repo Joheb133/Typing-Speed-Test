@@ -51,7 +51,7 @@ function userKeyPress(e) {
 
 function userKeyDown(e) {
     keyUpValue = e.key
-    if (keyUpValue === "Backspace" && keyPosition > 0) {
+    if (keyUpValue === "Backspace" && keyPosition > 1) {
         progressionBackward();
     };
 };
@@ -106,10 +106,10 @@ function progressionBackward() {
 
 // WPM function
 function wpm(){
-    //let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60); 
+    //let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60); // other forumula
 
     let wpm = (keyPosition/5) / (timeElapsed/60);
-    let accuracy = (((keyPosition - uncorrectedErrors)/keyPosition));
+    let accuracy = (keyPosition - uncorrectedErrors) / keyPosition;
     grossWpm = Math.round(wpm * accuracy);
     wpmEl.textContent = grossWpm;
 };
