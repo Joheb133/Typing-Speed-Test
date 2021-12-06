@@ -2,9 +2,13 @@ import "./style.css";
 import * as THREE from 'three';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // debugger
 const gui = new GUI();
+
+// loader
+const loader = new GLTFLoader();
 
 // setup
 const scene = new THREE.Scene();
@@ -23,7 +27,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 camera.position.y = -80;
 camera.position.z = 30;
 camera.rotation.x = 80 * Math.PI / 180;
-
 
 // create light
 const light = new THREE.PointLight(0xFFFFF); // soft white light
@@ -72,6 +75,17 @@ cube.position.setZ(cube.geometry.parameters.height / 2);
 cube.position.setX(-220);
 light.position.setZ(10 + cube.geometry.parameters.height);
 
+// Load asset
+loader.load('golf_vw.gltf', function (gltf) { // works with compiled code if asset is in output path
+	scene.add( gltf.scene );
+    console.log(gltf)
+
+}, undefined, function ( error ) {
+	console.error( error );
+});
+
+
+
 
 // gui.add(cube.scale, 'x');
 renderer.render(scene, camera);
@@ -81,7 +95,7 @@ function animator() {
     cube.position.x += (grossWpm / 100) * cubeDirection;
     camera.position.setX(cube.position.x); // follow cube
     light.position.setX(cube.position.x)
-    //controls.update(); // update camera controls
+    controls.update(); // update camera controls
 
     // Render
     renderer.render(scene, camera)
@@ -92,7 +106,7 @@ function animator() {
 
 animator();
 
-// countdown timer checks cube position every 1s instead of checking in animator which checks I presume is 144/s
+// countdown timer checks cube position every 100ms instead of checking in animator which checks I presume is 144/s
 setInterval(function () {
     // Code checks if plane is beneath cube, if not then move the plane in front since its not being seen
     // This prevents the need to load in an extremely long plane to ensure theres always a plane beneath the cube 

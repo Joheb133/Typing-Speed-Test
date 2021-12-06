@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/Joheb133/Typing-Speed-Test#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^10.0.0",
     "css-loader": "^6.5.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.64.1",
