@@ -7,30 +7,27 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 // debugger
 const gui = new GUI();
 
-// loader
-const loader = new GLTFLoader();
-
 // setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xAFCAE3); // changeing scene color
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({
+    antialias: true,
     canvas: document.querySelector("#bg")
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(40);
 
 // Orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
-camera.position.y = -80;
-camera.position.z = 30;
+camera.position.y = -10;
+camera.position.z = 5;
 camera.rotation.x = 80 * Math.PI / 180;
 
 // create light
 const light = new THREE.PointLight(0xFFFFF); // soft white light
-light.position.setY(-4)
+light.position.setY(-8)
 scene.add(light);
 
 
@@ -44,6 +41,11 @@ const lightGui = gui.addFolder("Light");
 lightGui.add(light.position, "x").min(-10).max(100).step(0.1).name("position x");
 lightGui.add(light.position, "y").min(-1000).max(100).step(0.1).name("position y");
 lightGui.add(light.position, "z").min(0).max(100).step(0.1).name("position z");
+
+// Ambient light
+const ambientLight = new THREE.AmbientLight(0xFFFFF);
+scene.add(ambientLight);
+ambientLight.intensity = 0.4;
 
 // Create plane
 const planeGeometry = new THREE.PlaneGeometry(500, 50);
@@ -65,37 +67,38 @@ const planeTwoWidth = planeTwo.geometry.parameters.width;
 planeTwo.position.setX((planeWidth + planeTwoWidth) / 2)
 let planeTwoPosition = planeTwo.position.x;
 
-// create cube
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0xA34CF4 });
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-scene.add(cube);
-
-cube.position.setZ(cube.geometry.parameters.height / 2);
-cube.position.setX(-220);
-light.position.setZ(10 + cube.geometry.parameters.height);
-
 // Load asset
-loader.load('golf_vw.gltf', function (gltf) { // works with compiled code if asset is in output path
-	scene.add( gltf.scene );
-    console.log(gltf)
+const loader = new GLTFLoader();
+let golf_vw;
+loader.load('golf_vw.gltf', function (gltf) {
+    //console.log(gltf);
+    golf_vw = gltf.scene.children[0];
+    golf_vw.position.set(-220, 0, 0.5);
+    golf_vw.rotation.z = Math.PI / 2;
+    golf_vw.rotation.x = 180 * Math.PI / 2;
 
-}, undefined, function ( error ) {
-	console.error( error );
+    scene.add(gltf.scene);
+    light.position.setZ(10 + golf_vw.position.y);
+    //controls.target = golf_vw;
+    animator(); // start animator after asset is
+
+}, undefined, function (error) {
+	console.error(error);
 });
+
+
 
 
 
 
 // gui.add(cube.scale, 'x');
 renderer.render(scene, camera);
-let cubeDirection = 1;
 function animator() {
     // Update objects
-    cube.position.x += (grossWpm / 100) * cubeDirection;
-    camera.position.setX(cube.position.x); // follow cube
-    light.position.setX(cube.position.x)
-    controls.update(); // update camera controls
+    golf_vw.position.x += (grossWpm / 100);
+    camera.position.setX(golf_vw.position.x); // follow cube
+    light.position.setX(golf_vw.position.x)
+    //controls.update(); // update camera controls
 
     // Render
     renderer.render(scene, camera)
@@ -104,18 +107,18 @@ function animator() {
     window.requestAnimationFrame(animator)
 };
 
-animator();
+
 
 // countdown timer checks cube position every 100ms instead of checking in animator which checks I presume is 144/s
 setInterval(function () {
     // Code checks if plane is beneath cube, if not then move the plane in front since its not being seen
     // This prevents the need to load in an extremely long plane to ensure theres always a plane beneath the cube 
     // This works by teleporting the plane out of view in front of the plane in view.
-    if (cube.position.x >= planeWidth / 2 + planePosition) {
+    if (golf_vw.position.x >= planeWidth / 2 + planePosition) {
         plane.position.setX((planeWidth + planeTwoWidth) / 2 + planeTwoPosition);
         planePosition = plane.position.x;
     }
-    else if (cube.position.x >= planeTwoWidth / 2 + planeTwoPosition) {
+    else if (golf_vw.position.x >= planeTwoWidth / 2 + planeTwoPosition) {
         planeTwo.position.setX((planeWidth + planeTwoWidth) / 2 + planePosition);
         planeTwoPosition = planeTwo.position.x;
     }
