@@ -13,7 +13,6 @@ function generateWords(inputParagraph) {
             tempLetterHold = "";
         }
     }
-    // console.log(JSON.stringify(outputParagraph));
 };
 
 generateWords(paragraph)

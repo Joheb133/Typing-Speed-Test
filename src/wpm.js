@@ -1,11 +1,7 @@
-const words = ['Machines', 'like', 'Robert', 'are', 'mainstays', 'of', 'science', 'fiction-the', 'idea', 'of', 'a', 'robot', 'that', 
-'somehow', 'replicates', 'consciousness', 'through', 'its', 'hardware', 'or', 'software', 'has', 'been', 'around', 'so', 'long', 'it', 
-'feels', 'familiar.', 'Margolis', 'wrote', 'the', 'paper', 'with', 'senior', 'author', 'Pulkit', 'Agrawal,', 'who', 'heads', 'the', 
-'Improbable', 'AI', 'lab', 'at', 'MIT', 'and', 'is', 'the', 'Steven', 'G.', 'and', 'Renee', 'Finn', 'Career', 'Development', 'Assistant', 
-'Professor', 'in', 'the', 'Department', 'of', 'Electrical', 'Engineering', 'and', 'Computer', 'Science;', 'Professor', 'Sangbae', 
-'Kim', 'in', 'the', 'Department', 'of', 'Mechanical', 'Engineering', 'at', 'MIT;', 'and', 'fellow', 'graduate', 'students', 'Tao', 
-'Chen', 'and', 'Xiang', 'Fu', 'at', 'MIT.', 'Other', 'co-authors', 'include', 'Kartik', 'Paigwar,', 'a', 'graduate', 'student', 'at', 
-'Arizona', 'State', 'University.'];
+const passages = {
+    ai: "AI systems have the ability to learn and adapt as they make decisions. In the transportation area, for example, semi-autonomous vehicles have tools that let drivers and vehicles know about upcoming congestion, potholes, highway construction, or other possible traffic impediments. Vehicles can take advantage of the experience of other vehicles on the road, without human involvement, and the entire corpus of their achieved “experience” is immediately and fully transferable to other similarly configured vehicles. Their advanced algorithms, sensors, and cameras incorporate experience in current operations, and use dashboards and visual displays to present information in real time so human drivers are able to make sense of ongoing traffic and vehicular conditions. And in the case of fully autonomous vehicles, advanced systems can completely control the car or truck, and make all the navigational decisions.",
+    supernova: "A supernova is a powerful and luminous stellar explosion. This transient astronomical event occurs during the last evolutionary stages of a massive star or when a white dwarf is triggered into runaway nuclear fusion. The original object, called the progenitor, either collapses to a neutron star or black hole, or is completely destroyed. The peak optical luminosity of a supernova can be comparable to that of an entire galaxy before fading over several weeks or months. The most recent directly observed supernova in the Milky Way was Kepler's Supernova in 1604, but the remnants of more recent supernovae have been found. Observations of supernovae in other galaxies suggest they occur in the Milky Way on average about three times every century. These supernovae would almost certainly be observable with modern astronomical telescopes. The most recent naked-eye supernova was SN 1987A, the explosion of a blue supergiant star in the Large Magellanic Cloud, a satellite of the Milky Way."
+};
 const wordsEl = document.getElementById("words-el");
 const timerEl = document.getElementById("timer-el");
 const wpmEl = document.getElementById("wpm-el");
@@ -19,7 +15,7 @@ let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
 global.grossWpm = 0;
 
-
+console.log(passages.supernova.length)
 
 
 //function adds letters from words array to document
@@ -28,10 +24,10 @@ function documentLetters(item) {
     for (i = 0; i < item.length; i++) {
         letters += `<span>${item.charAt(i)}</span>`
     };
-    letters += `<span> </span>`;
     wordsEl.innerHTML += letters;
 };
-words.forEach(documentLetters);
+documentLetters(passages.supernova)
+//words.forEach(documentLetters);
 const paragraphLength = wordsEl.childElementCount;
 timerEl.textContent = countdown;
 
@@ -80,7 +76,7 @@ function progressionForward() {
 function stopProgression() {
     wordsCurrentValue = wordsEl.children[keyPosition];
     wordsEl.children[keyPosition].style.borderBottom = "solid red"; // let user know their current input was wrong and they cant move on
-    if(keyPressValue === wordsCurrentValue.textContent){
+    if (keyPressValue === wordsCurrentValue.textContent) {
         errorStreak = 0;
         keyPosition++;
         uncorrectedErrors--;
@@ -97,7 +93,7 @@ function progressionBackward() {
     // indicate current user placement
     wordsCurrentValue.style.borderBottom = "solid blue";
     wordsEl.children[keyPosition + 1].style.borderBottom = "none";
-    if (wordsCurrentValue.id === "wrong-span"){ // Using this condition so user isn't punished for fixed mistakes
+    if (wordsCurrentValue.id === "wrong-span") { // Using this condition so user isn't punished for fixed mistakes
         uncorrectedErrors--;
         errorStreak = 0;
     };
@@ -105,10 +101,10 @@ function progressionBackward() {
 };
 
 // WPM function
-function wpm(){
+function wpm() {
     //let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60); // other forumula
 
-    let wpm = (keyPosition/5) / (timeElapsed/60);
+    let wpm = (keyPosition / 5) / (timeElapsed / 60);
     let accuracy = (keyPosition - uncorrectedErrors) / keyPosition;
     grossWpm = Math.round(wpm * accuracy);
     wpmEl.textContent = grossWpm;

@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { GUI } from 'three/examples/jsm/libs/dat.gui.module';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 // debugger
 const gui = new GUI();
@@ -70,8 +72,7 @@ let planeTwoPosition = planeTwo.position.x;
 // Load asset
 const loader = new GLTFLoader();
 let golf_vw;
-loader.load('golf_vw.gltf', function (gltf) {
-    //console.log(gltf);
+loader.load('models/golf_vw.gltf', function (gltf) {
     golf_vw = gltf.scene.children[0];
     golf_vw.position.set(-220, 0, 0.5);
     golf_vw.rotation.z = Math.PI / 2;
@@ -86,17 +87,33 @@ loader.load('golf_vw.gltf', function (gltf) {
 	console.error(error);
 });
 
+// Load text
+const fontLoader = new FontLoader();
+fontLoader.load("fonts/Lucida Sans Typewriter_Regular.json", function(font){
+    let geometrySetting = {
+        font: font,
+        size: 1,
+        height: 0,
+        curveSegments: 20,
+    }
+    const textGeometry = new TextGeometry("game", geometrySetting);
+    const textMaterial = new THREE.MeshBasicMaterial({color: 0xffffff})
+    const textExample = new THREE.Mesh(textGeometry, textMaterial);
+
+    textExample.position.set(-221, -3, 0.01);
+    scene.add(textExample)
+});
 
 
 
 
 
-// gui.add(cube.scale, 'x');
+
 renderer.render(scene, camera);
 function animator() {
     // Update objects
     golf_vw.position.x += (grossWpm / 100);
-    camera.position.setX(golf_vw.position.x); // follow cube
+    camera.position.setX(golf_vw.position.x); // follow car
     light.position.setX(golf_vw.position.x)
     //controls.update(); // update camera controls
 
