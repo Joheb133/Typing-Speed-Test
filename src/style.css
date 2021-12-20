@@ -6,7 +6,7 @@ body{
 }
 canvas{
     position: fixed;
-    bottom: 45%;
+    bottom: 0%;
     left: 0;
 }
 .wpm-container{
@@ -14,6 +14,7 @@ canvas{
     position: fixed;
     top: 55%;
     left: 0;
+    display: none;
 }
 #timer-el{
     font-size: 32px;
@@ -22,7 +23,7 @@ canvas{
 #wpm-el{
     font-size: 28px;
     font-family: sans-serif;
-    color: rgb(183, 0, 255);
+    color: rgb(156, 4, 131);
 }
 #words-el{
     font-size: 28px;

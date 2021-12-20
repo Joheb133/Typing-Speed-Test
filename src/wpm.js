@@ -15,8 +15,6 @@ let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
 global.grossWpm = 0;
 
-console.log(passages.supernova.length)
-
 
 //function adds letters from words array to document
 function documentLetters(item) {
@@ -108,6 +106,7 @@ function wpm() {
     let accuracy = (keyPosition - uncorrectedErrors) / keyPosition;
     grossWpm = Math.round(wpm * accuracy);
     wpmEl.textContent = grossWpm;
+    
 };
 
 // Timer is being kept here for now since I see no reason for it to have its own file
