@@ -11,10 +11,21 @@ let plane, planeTwo;
 let planePosition, planeTwoPosition;
 let planeWidth, planeTwoWidth;
 let textExample, car, light;
-let controls;
 let camDist;
+let aspectRatio = window.innerWidth / window.innerHeight;
 
 
+
+window.addEventListener("resize", onWindowResize, false);
+function onWindowResize(){
+    aspectRatio = window.innerWidth / window.innerHeight;
+    camera.left = -camDist * aspectRatio;
+    camera.right = camDist * aspectRatio;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
 
 init();
 function init() {
@@ -31,20 +42,11 @@ function init() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
-    //document.body.appendChild( renderer.domElement ); // for orbit controls
 
     // Setting up Orthographic camera
-    const aspectRatio = window.innerWidth / window.innerHeight;
+    console.log(aspectRatio)
     camDist = 20;
     camera = new THREE.OrthographicCamera(- camDist * aspectRatio, camDist * aspectRatio, camDist, - camDist, 1, 1000);
-
-    // Setting up Perspective camera camera
-    // camera = new THREE.PerspectiveCamera( 45, aspectRatio, 1, 10000 );
-    // camera.position.set(0, 50, 0)
-    // camera.lookAt(scene.position);
-    // //scene.add( camera );
-    // controls = new OrbitControls( camera, renderer.domElement );
-
     //// create light
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambientLight);
@@ -152,7 +154,6 @@ function animator() {
     camera.lookAt(car.position.x, 0, 0);
     light.position.setX(car.position.x);
     textExample.position.setX(car.position.x);
-    //controls.update(); // update camera controls
 
     // Render
     renderer.render(scene, camera)
