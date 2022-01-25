@@ -1,3 +1,5 @@
+
+
 const passages = {
     ai: "AI systems have the ability to learn and adapt as they make decisions. In the transportation area, for example, semi-autonomous vehicles have tools that let drivers and vehicles know about upcoming congestion, potholes, highway construction, or other possible traffic impediments. Vehicles can take advantage of the experience of other vehicles on the road, without human involvement, and the entire corpus of their achieved “experience” is immediately and fully transferable to other similarly configured vehicles. Their advanced algorithms, sensors, and cameras incorporate experience in current operations, and use dashboards and visual displays to present information in real time so human drivers are able to make sense of ongoing traffic and vehicular conditions. And in the case of fully autonomous vehicles, advanced systems can completely control the car or truck, and make all the navigational decisions.",
     supernova: "A supernova is a powerful and luminous stellar explosion. This transient astronomical event occurs during the last evolutionary stages of a massive star or when a white dwarf is triggered into runaway nuclear fusion. The original object, called the progenitor, either collapses to a neutron star or black hole, or is completely destroyed. The peak optical luminosity of a supernova can be comparable to that of an entire galaxy before fading over several weeks or months. The most recent directly observed supernova in the Milky Way was Kepler's Supernova in 1604, but the remnants of more recent supernovae have been found. Observations of supernovae in other galaxies suggest they occur in the Milky Way on average about three times every century. These supernovae would almost certainly be observable with modern astronomical telescopes. The most recent naked-eye supernova was SN 1987A, the explosion of a blue supergiant star in the Large Magellanic Cloud, a satellite of the Milky Way."
@@ -13,7 +15,8 @@ let uncorrectedErrors = 0;
 let errorStreak = 0;
 let typedEntries = 0;
 let wordsCurrentValue = wordsEl.children[keyPosition];
-global.grossWpm = 0;
+let grossWpm = 0;
+
 
 
 //function adds letters from words array to document
@@ -25,7 +28,6 @@ function documentLetters(item) {
     wordsEl.innerHTML += letters;
 };
 documentLetters(passages.supernova)
-//words.forEach(documentLetters);
 const paragraphLength = wordsEl.childElementCount;
 timerEl.textContent = countdown;
 
@@ -36,7 +38,7 @@ document.addEventListener("keydown", userKeyDown);
 
 function userKeyPress(e) {
     keyPressValue = e.key;
-    if (errorStreak < 1) { // makes sure not to run function when there's no more letters
+    if (errorStreak < 1) { // makes sure not to run function when users made too many mistakes
         progressionForward();
     } else {
         stopProgression();
@@ -100,13 +102,10 @@ function progressionBackward() {
 
 // WPM function
 function wpm() {
-    //let grossWpm = ((keyPosition/5) - uncorrectedErrors) / (timeElapsed/60); // other forumula
-
     let wpm = (keyPosition / 5) / (timeElapsed / 60);
     let accuracy = (keyPosition - uncorrectedErrors) / keyPosition;
     grossWpm = Math.round(wpm * accuracy);
     wpmEl.textContent = grossWpm;
-    
 };
 
 // Timer is being kept here for now since I see no reason for it to have its own file
@@ -133,3 +132,4 @@ function checkFirstInput() {
     }, 1000);
     document.removeEventListener("keypress", checkFirstInput);
 };
+

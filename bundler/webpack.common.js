@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-    entry: [ "./src/wpm.js","./src/index.js"],
+    entry: ["./src/index.js"],
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
@@ -11,7 +11,7 @@ module.exports = {
             ]
         }),
         new HtmlWebpackPlugin({
-            template: "./src/test.html"
+            template: "./src/template.html"
         })
     ],
     module: {
